@@ -17,6 +17,7 @@
 		444DA01A2711D87E0049F0D1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 444DA0192711D87E0049F0D1 /* Assets.xcassets */; };
 		444DA01D2711D87E0049F0D1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 444DA01B2711D87E0049F0D1 /* LaunchScreen.storyboard */; };
 		448DC9EA27122AB500F8CBBC /* Persistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448DC9E927122AB500F8CBBC /* Persistance.swift */; };
+		448DC9EC2712DC7100F8CBBC /* TodoRealmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448DC9EB2712DC7100F8CBBC /* TodoRealmViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		444DA01C2711D87E0049F0D1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		444DA01E2711D87E0049F0D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		448DC9E927122AB500F8CBBC /* Persistance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistance.swift; sourceTree = "<group>"; };
+		448DC9EB2712DC7100F8CBBC /* TodoRealmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoRealmViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 				444DA00D2711D87E0049F0D1 /* AppDelegate.swift */,
 				444DA00F2711D87E0049F0D1 /* SceneDelegate.swift */,
 				444DA0112711D87E0049F0D1 /* UserDefaultsController.swift */,
+				448DC9EB2712DC7100F8CBBC /* TodoRealmViewController.swift */,
 				448DC9E927122AB500F8CBBC /* Persistance.swift */,
 				444DA0132711D87E0049F0D1 /* Main.storyboard */,
 				444DA0192711D87E0049F0D1 /* Assets.xcassets */,
@@ -155,6 +158,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				448DC9EC2712DC7100F8CBBC /* TodoRealmViewController.swift in Sources */,
 				444DA0122711D87E0049F0D1 /* UserDefaultsController.swift in Sources */,
 				444DA00E2711D87E0049F0D1 /* AppDelegate.swift in Sources */,
 				444DA0102711D87E0049F0D1 /* SceneDelegate.swift in Sources */,
