@@ -3,6 +3,7 @@ import Foundation
 class Persistance {
    static let shared = Persistance()
    
+   // UserDefaults
    private let keyUserName = "Persistance.keyUserName"
    var userName: String? {
       set {

@@ -18,6 +18,7 @@
 		444DA01D2711D87E0049F0D1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 444DA01B2711D87E0049F0D1 /* LaunchScreen.storyboard */; };
 		448DC9EA27122AB500F8CBBC /* Persistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448DC9E927122AB500F8CBBC /* Persistance.swift */; };
 		448DC9EC2712DC7100F8CBBC /* TodoRealmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448DC9EB2712DC7100F8CBBC /* TodoRealmViewController.swift */; };
+		449CFFD327155DEF00D32FB0 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449CFFD227155DEF00D32FB0 /* Task.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		444DA01E2711D87E0049F0D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		448DC9E927122AB500F8CBBC /* Persistance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistance.swift; sourceTree = "<group>"; };
 		448DC9EB2712DC7100F8CBBC /* TodoRealmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoRealmViewController.swift; sourceTree = "<group>"; };
+		449CFFD227155DEF00D32FB0 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 				444DA00F2711D87E0049F0D1 /* SceneDelegate.swift */,
 				444DA0112711D87E0049F0D1 /* UserDefaultsController.swift */,
 				448DC9EB2712DC7100F8CBBC /* TodoRealmViewController.swift */,
+				449CFFD227155DEF00D32FB0 /* Task.swift */,
 				448DC9E927122AB500F8CBBC /* Persistance.swift */,
 				444DA0132711D87E0049F0D1 /* Main.storyboard */,
 				444DA0192711D87E0049F0D1 /* Assets.xcassets */,
@@ -163,6 +166,7 @@
 				444DA00E2711D87E0049F0D1 /* AppDelegate.swift in Sources */,
 				444DA0102711D87E0049F0D1 /* SceneDelegate.swift in Sources */,
 				448DC9EA27122AB500F8CBBC /* Persistance.swift in Sources */,
+				449CFFD327155DEF00D32FB0 /* Task.swift in Sources */,
 				444DA0182711D87E0049F0D1 /* Task_14.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -390,7 +394,7 @@
 			repositoryURL = "https://github.com/realm/realm-cocoa.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
+				minimumVersion = 10.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

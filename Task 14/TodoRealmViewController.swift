@@ -1,7 +1,9 @@
 import UIKit
+import RealmSwift
 
 class TodoRealmViewController: UITableViewController {
-   var tasks: [String] = []
+   private let realm = try! Realm()
+   var tasks: Results<Task>?
    
    override func viewDidLoad() {
       super.viewDidLoad()
@@ -11,7 +13,6 @@ class TodoRealmViewController: UITableViewController {
    
    func setupTable() {
       tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-//      view.backgroundColor = .white
       // Navigation Bar Appearance
       let navigationBarAppearance = UINavigationBarAppearance()
       navigationBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
@@ -28,6 +29,8 @@ class TodoRealmViewController: UITableViewController {
                                                           style: .plain,
                                                           target: self,
                                                           action: #selector(addTask))
+      
+      tasks = realm.objects(Task.self)
    }
    
    @objc func addTask(_ sender: AnyObject) {
@@ -43,10 +46,14 @@ class TodoRealmViewController: UITableViewController {
       }
       // Alert save button
       let saveButton = UIAlertAction(title: "Save", style: .default) { _ in
-         if let taskText = alertTextField.text, !taskText.isEmpty {
-            self.tasks.append(taskText)
-            self.tableView.reloadData()
+         guard let taskText = alertTextField.text, !taskText.isEmpty else { return }
+         
+         let task = Task()
+         task.text = taskText
+         try! self.realm.write {
+            self.realm.add(task)
          }
+         self.tableView.reloadData()
       }
       // Alert cancel button
       let cancelButton = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
@@ -60,21 +67,29 @@ class TodoRealmViewController: UITableViewController {
    
    // Table View Data Source
    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-      return tasks.count
+      return tasks?.count ?? 0
    }
    
    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
       let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-      var content = cell.defaultContentConfiguration()
-      content.text = tasks[indexPath.row]
-      cell.contentConfiguration = content
+      if let task = tasks?[indexPath.row] {
+         
+         var content = cell.defaultContentConfiguration()
+         content.text = task.text
+         cell.contentConfiguration = content
+      }
+      
       return cell
    }
    
    // Table View Delegate
    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
       let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, _  in
-         self.tasks.remove(at: indexPath.row)
+         try! self.realm.write {
+            guard let tasks = self.tasks else { return }
+            self.realm.delete(tasks[indexPath.row])
+         }
+//         self.tasks?.remove(at: indexPath.row)
          tableView.reloadData()
       }
       let deleteSwipe = UISwipeActionsConfiguration(actions: [deleteAction])
