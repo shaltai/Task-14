@@ -1,13 +1,15 @@
 import UIKit
-import RealmSwift
+//import CoreData
 
-class TodoRealmViewController: UITableViewController {
-   private let realm = try! Realm()
-   var tasks: Results<Task>?
+class CoreDataViewController: UITableViewController {
+   let context = Persistance.shared.persistentContainer.viewContext
+   
+   var tasks: [TaskCoreData] = []
    
    override func viewDidLoad() {
       super.viewDidLoad()
       
+      getTasks()
       setupTable()
    }
    
@@ -29,68 +31,89 @@ class TodoRealmViewController: UITableViewController {
                                                           style: .plain,
                                                           target: self,
                                                           action: #selector(addTask))
-      
-      tasks = realm.objects(Task.self)
+   }
+   // Get tasks
+   func getTasks() {
+      do {
+         tasks = try context.fetch(TaskCoreData.fetchRequest())
+         DispatchQueue.main.async {
+            self.tableView.reloadData()
+         }
+      } catch let error as NSError {
+         print("Error: \(error), \(error.userInfo)")
+      }
    }
    
-   @objc func addTask(_ sender: AnyObject) {
+   // Add task
+   @objc func addTask() {
       // Alert modal
-      let alert = UIAlertController(title: "New Task",
+      let alert = UIAlertController(title: "Add Task",
                                     message: nil,
                                     preferredStyle: .alert)
-      // Alert Textfield
-      var alertTextField = UITextField()
-      alert.addTextField { textField in
-         alertTextField = textField
-         textField.placeholder = "New task"
+      // Alert textfield
+      var alertTextfield = UITextField()
+      alert.addTextField { textfield in
+         alertTextfield = textfield
+         textfield.placeholder = "New Task"
       }
       // Alert save button
-      let saveButton = UIAlertAction(title: "Save", style: .default) { _ in
-         guard let taskText = alertTextField.text, !taskText.isEmpty else { return }
+      let saveAction = UIAlertAction(title: "Save", style: .default) { [weak self] _ in
+         guard let taskText = alertTextfield.text,
+               let self = self,
+               !taskText.isEmpty else { return }
          
-         let task = Task()
+         let task = TaskCoreData(context: self.context)
          task.text = taskText
-         try! self.realm.write {
-            self.realm.add(task)
+         
+         guard self.context.hasChanges else { return }
+         do {
+            try self.context.save()
+         } catch let error as NSError {
+            print("Error: \(error), \(error.userInfo)")
          }
-         self.tableView.reloadData()
+         self.getTasks()
       }
       // Alert cancel button
-      let cancelButton = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
+      let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
       // Add actions to alert
-      alert.addAction(saveButton)
-      alert.addAction(cancelButton)
-      
-      // Show modal
+      alert.addAction(saveAction)
+      alert.addAction(cancelAction)
+      // Show alert modal
       present(alert, animated: true, completion: nil)
+      
    }
    
-   // Table View Data Source
+   // MARK: - Table view data source
+   
    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-      return tasks?.count ?? 0
+      return tasks.count
    }
    
+   // Populate table
    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
       let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-      if let task = tasks?[indexPath.row] {
-         
-         var content = cell.defaultContentConfiguration()
-         content.text = task.text
-         cell.contentConfiguration = content
-      }
+      let task = tasks[indexPath.row]
+      
+      var content = cell.defaultContentConfiguration()
+      content.text = task.text
+      cell.contentConfiguration = content
       
       return cell
    }
    
-   // Table View Delegate
+   // Delete task
    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-      let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, _  in
-         try! self.realm.write {
-            guard let tasks = self.tasks else { return }
-            self.realm.delete(tasks[indexPath.row])
+      let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, _ in
+         let task = self.tasks[indexPath.row]
+         
+         self.context.delete(task)
+         guard self.context.hasChanges else { return }
+         do {
+            try self.context.save()
+         } catch let error as NSError {
+            print("Error: \(error), \(error.userInfo)")
          }
-//         self.tasks?.remove(at: indexPath.row)
-         tableView.reloadData()
+         self.getTasks()
       }
       let deleteSwipe = UISwipeActionsConfiguration(actions: [deleteAction])
       return deleteSwipe
