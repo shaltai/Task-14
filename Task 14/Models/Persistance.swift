@@ -35,4 +35,14 @@ class Persistance {
       })
       return container
    }()
+   
+   // Save context
+   func save(context: NSManagedObjectContext) {
+      guard context.hasChanges else { return }
+      do {
+         try context.save()
+      } catch let error as NSError {
+         print("Error: \(error), \(error.userInfo)")
+      }
+   }
 }
