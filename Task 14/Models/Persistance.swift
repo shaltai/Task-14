@@ -1,8 +1,20 @@
 import Foundation
 import CoreData
+import RealmSwift
 
 class Persistance {
    static let shared = Persistance()
+   
+   // Realm
+   let realm = try! Realm()
+   
+   func save(task text: String) {
+      let task = Task()
+      task.text = text
+      try! self.realm.write {
+         self.realm.add(task)
+      }
+   }
    
    // UserDefaults
    private let keyUserName = "Persistance.keyUserName"
