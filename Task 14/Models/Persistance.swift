@@ -48,6 +48,18 @@ class Persistance {
       return container
    }()
    
+   // Get tasks
+   func getTasks() -> [TaskCoreData] {
+      var tasks: [TaskCoreData] = []
+      
+      do {
+         tasks = try persistentContainer.viewContext.fetch(TaskCoreData.fetchRequest())
+      } catch let error as NSError {
+         print("Error: \(error), \(error.userInfo)")
+      }
+      return tasks
+   }
+   
    // Save context
    func save(context: NSManagedObjectContext) {
       guard context.hasChanges else { return }

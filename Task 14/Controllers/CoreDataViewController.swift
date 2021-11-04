@@ -1,6 +1,6 @@
 import UIKit
 
-class CoreDataViewController: UITableViewController {
+class CoreDataViewController: ToDoViewController {
    let context = Persistance.shared.persistentContainer.viewContext
    
    var tasks: [TaskCoreData] = []
@@ -8,39 +8,10 @@ class CoreDataViewController: UITableViewController {
    override func viewDidLoad() {
       super.viewDidLoad()
       
-      getTasks()
-      setupTable()
-   }
-   
-   func setupTable() {
-      tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-      // Navigation Bar Appearance
-      let navigationBarAppearance = UINavigationBarAppearance()
-      navigationBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-      navigationBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-      navigationBarAppearance.backgroundColor = .systemBlue
-      navigationController?.navigationBar.standardAppearance = navigationBarAppearance
-      navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
-      // Title
-      navigationItem.title = "Tasks"
-      navigationController?.navigationBar.tintColor = .white
-      navigationController?.navigationBar.prefersLargeTitles = true
-      // Navigation Bar Button
-      navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add",
-                                                          style: .plain,
-                                                          target: self,
-                                                          action: #selector(addTask))
-   }
-   // Get tasks
-   func getTasks() {
-      do {
-         tasks = try context.fetch(TaskCoreData.fetchRequest())
-         DispatchQueue.main.async {
-            self.tableView.reloadData()
-         }
-      } catch let error as NSError {
-         print("Error: \(error), \(error.userInfo)")
-      }
+      super.setupTable(title: "Core Data Tasks", identifier: "cell", selector: #selector(addTask))
+      
+      tasks = Persistance.shared.getTasks()
+      tableView.reloadData()
    }
    
    // Add task
@@ -65,20 +36,19 @@ class CoreDataViewController: UITableViewController {
          task.text = taskText
          
          Persistance.shared.save(context: self.context)
-         self.getTasks()
+         self.tasks = Persistance.shared.getTasks()
+         self.tableView.reloadData()
       }
       // Alert cancel button
-      let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+      let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
       // Add actions to alert
-      alert.addAction(saveAction)
       alert.addAction(cancelAction)
+      alert.addAction(saveAction)
       // Show alert modal
       present(alert, animated: true, completion: nil)
-      
    }
    
-   // MARK: - Table view data source
-   
+   // Table view data source
    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
       return tasks.count
    }
@@ -122,7 +92,8 @@ class CoreDataViewController: UITableViewController {
          } catch let error as NSError {
             print("Error: \(error), \(error.userInfo)")
          }
-         self.getTasks()
+         self.tasks = Persistance.shared.getTasks()
+         tableView.reloadData()
       }
       let deleteSwipe = UISwipeActionsConfiguration(actions: [deleteAction])
       return deleteSwipe
@@ -155,13 +126,14 @@ class CoreDataViewController: UITableViewController {
          } catch let error as NSError {
             print("Error: \(error), \(error.userInfo)")
          }
-         self.getTasks()
+         self.tasks = Persistance.shared.getTasks()
+         tableView.reloadData()
       }
       // Alert cancel button
-      let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+      let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
       // Add actions to alert
-      alert.addAction(updateAction)
       alert.addAction(cancelAction)
+      alert.addAction(updateAction)
       // Show alert modal
       present(alert, animated: true, completion: nil)
    }
@@ -177,7 +149,8 @@ class CoreDataViewController: UITableViewController {
       let completeAction = UIContextualAction(style: .normal, title: actionTitle) { _, _, _ in
          task.isCompleted = !task.isCompleted
          Persistance.shared.save(context: self.context)
-         self.getTasks()
+         self.tasks = Persistance.shared.getTasks()
+         tableView.reloadData()
       }
       completeAction.backgroundColor = task.isCompleted ? .systemBlue : nil
       

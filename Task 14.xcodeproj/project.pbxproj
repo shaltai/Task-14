@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		440859EE2711DD4500CED905 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 440859ED2711DD4500CED905 /* Realm */; };
 		440859F02711DD4500CED905 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 440859EF2711DD4500CED905 /* RealmSwift */; };
+		4420DD512732760100857B4F /* ToDoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4420DD502732760100857B4F /* ToDoViewController.swift */; };
 		444DA00E2711D87E0049F0D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DA00D2711D87E0049F0D1 /* AppDelegate.swift */; };
 		444DA0102711D87E0049F0D1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DA00F2711D87E0049F0D1 /* SceneDelegate.swift */; };
 		444DA0122711D87E0049F0D1 /* UserDefaultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DA0112711D87E0049F0D1 /* UserDefaultsController.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4420DD502732760100857B4F /* ToDoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoViewController.swift; sourceTree = "<group>"; };
 		444DA00A2711D87E0049F0D1 /* Task 14.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Task 14.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		444DA00D2711D87E0049F0D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		444DA00F2711D87E0049F0D1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 				444DA0112711D87E0049F0D1 /* UserDefaultsController.swift */,
 				448DC9EB2712DC7100F8CBBC /* TodoRealmViewController.swift */,
 				44E2044D27197B5400F4DBB8 /* CoreDataViewController.swift */,
+				4420DD502732760100857B4F /* ToDoViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -194,6 +197,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4420DD512732760100857B4F /* ToDoViewController.swift in Sources */,
 				448DC9EC2712DC7100F8CBBC /* TodoRealmViewController.swift in Sources */,
 				44E2044E27197B5400F4DBB8 /* CoreDataViewController.swift in Sources */,
 				444DA0122711D87E0049F0D1 /* UserDefaultsController.swift in Sources */,
